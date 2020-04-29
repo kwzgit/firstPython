@@ -68,51 +68,11 @@ def save_in_xl(dicts_list, filename, cut_cursor='\n', save='new', sheetname='She
 			sheet.append(row) # 存内容
 		xl.save(filename + '.xlsx')
 
-def oldStruct(file,sheetname):
-	redisPool = redisConnPool()
-	redisConnection = getRedisCon(redisPool)
-	dictList = read_from_xl(file,sheetname=sheetname)
-	newDictList = []
-	for row in dictList:
-		type = row.get('类型')
-		number = row.get('序号')
-		standWord = row.get('标准词')
-		tongyici = row.get('同义词')
-		result = row.get('结果')
-		newResult = ''
-		if number != '':
-			print(row)
-			if type == '症状' or type == '体征' or type == '诱因' or type == '其他' or type == '辅检':
-				# 标准词
-				redisType = redisConnection.hget('library_info',standWord)
-				if redisType is None:
-					newStandWord = standWord
-				else:
-					newStandWord = ''
-				# 同义词
-				tongyiciList = []
-				tongyiciSplits = tongyici.split('、')
-				for t in tongyiciSplits:
-					tongyiciType = redisConnection.hget('library_info',t)
-					if tongyiciType is None:
-						tongyiciList.append(t)
-					else:
-						tongyiciList.append('')
-				newTongyici = "、".join('%s' %id for id in tongyiciList)
-				if newTongyici.startswith("、"):
-					newTongyici = newTongyici.replace(newTongyici[0:1],'')
-				newDictList.append({'类型': type, '序号': number, '标准词': standWord, '新标准词': newStandWord, '同义词': tongyici, '新同义词': newTongyici, '结果': result, '新结果': newResult})
-			if type == '化验':
-				print()
-
-
-			elif str(number).__contains__('诊'):
-				newDictList.append({'类型': '', '序号': number, '标准词': '','新标准词':'', '同义词': tongyici,'新同义词':'', '结果': '','新结果':''})
-	return newDictList
 
 if __name__ == "__main__":
-	newDictList = oldStruct('./excelFile/加不进去的诊断依据','胆管结石')
-	save_in_xl(newDictList,'./excelFile/辅检图谱疾病',cut_cursor='\n',save='old',sheetname='胆管结石')
+	print()
+
+	# save_in_xl(newDictList,'./excelFile/辅检图谱疾病',cut_cursor='\n',save='old',sheetname='胆管结石')
 
 
 

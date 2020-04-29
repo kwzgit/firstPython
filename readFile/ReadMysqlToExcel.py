@@ -11,7 +11,7 @@ from readFile.ReadWriteExcel import save_in_xl
 mysql_info = {
     'user': 'root',
     'password': 'diagbot@20180822kwz',
-    'host': '192.168.2.235',
+    'host': '192.168.21.235',
     'database': 'diagbot-app',
     'charset': 'utf8'
 }
