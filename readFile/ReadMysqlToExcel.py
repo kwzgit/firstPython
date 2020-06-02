@@ -20,6 +20,7 @@ def getMysqlCon():
     mysqlCon = pymysql.connect(**mysql_info)
     return mysqlCon
 
+
 def readMysql2Excel():
     bigDict = {}
     dicts_list = []
@@ -49,6 +50,8 @@ def readMysql2Excel():
     cursor.close()
     mysqlCon.close()
     return bigDict
+
+
 if __name__ == '__main__':
    dataList =  readMysql2Excel()
    for diag in dataList:

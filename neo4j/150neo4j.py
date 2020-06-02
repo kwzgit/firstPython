@@ -9,6 +9,7 @@
 from py2neo import Graph,Node, Relationship
 import pymysql
 class ne4o150:
+
     def __init__(self):
         # neo4j
         self.neo4j150 = 'bolt://192.168.31.150:7687'
