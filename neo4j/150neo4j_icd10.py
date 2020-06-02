@@ -47,6 +47,7 @@ for dig in diagnoses:
     print()
     if dig in dictData.keys():
         icd10 = dictData[dig]
+
         tx.run('match(d:diagnose) where d.name="{0}" set d.icd10="{1}"'.format(dig,icd10))
     else:
         tx.run('match(d:diagnose) where d.name="{0}" set d.icd10="{1}"'.format(dig, ""))
